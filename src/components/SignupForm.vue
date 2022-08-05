@@ -13,7 +13,7 @@
     </select>
 
     <label>Skills</label>
-    <input type="text" v-model="tempSkill" @keyup.alt="addSkill">
+    <input type="text" v-model="tempSkill" @keyup.enter="addSkill">
     <div v-for="skill in skills" :key="skill" class="pill">
       <span @click="deleteSkill(skill)">{{ skill }}</span>
     </div>
@@ -26,7 +26,7 @@
 
   <p>Email: {{ email }}</p>
   <p>Password: {{ password }}</p>
-  <p>Your role: {{ role }}</p>
+  <p>Role: {{ role }}</p>
   <p>Terms accepted: {{ terms }}</p>
 </template>
 
