@@ -1,10 +1,10 @@
 <template>
   <form>
     <label>Email:</label>
-    <input type="email" required v-model="email">
+    <input type="email" v-model="email" required>
 
     <label>Password:</label>
-    <input type="password" required v-model="password">
+    <input type="password" v-model="password" required>
 
     <label>Role:</label>
     <select v-model="role">
@@ -12,46 +12,53 @@
       <option value="designer">Web Designer</option>
     </select>
 
-    <label>Skills:</label>
-    <input type="text" v-model="tempSkill" @keyup.enter="addSkill">
+    <label>Skills (press alt + comma to add):</label>
+    <input type="text" v-model="tempSkill" @keyup.alt="addSkill">
     <div v-for="skill in skills" :key="skill" class="pill">
-      {{ skill }}
+      <span @click="deleteSkill(skill)">{{ skill }}</span>
     </div>
 
     <div class="terms">
-       <input type="checkbox" v-model="terms" required>
-       <label>Accept terms and condition</label>
+      <input type="checkbox" v-model="terms" required>
+      <label>Accept terms and conditions</label>
     </div>
-
   </form>
+
   <p>Email: {{ email }}</p>
   <p>Password: {{ password }}</p>
-  <p>Role: {{ role }}</p>
+  <p>Your role: {{ role }}</p>
   <p>Terms accepted: {{ terms }}</p>
 </template>
 
 <script>
+// challenge
+//   - when a user clicks on a skill, delete that skill
 export default {
-    data() {
-        return {
-            email: 'kyle',
-            password: '',
-            role: 'designer',
-            terms: false,
-            tempSkill: '',
-            skills: []
-        }
-    },
-    methods: {
-      addSkill(e) {
-        if (e.key === ',' && this.tempSkill) {
-          if(!this.skills.includes(this.tempSkill)) {
-             this.skills.push(this.tempSkill) 
-          }
-          this.tempSkill = ''
-        }
-      }
+  data() {
+    return {
+      email: '',
+      password: '',
+      role: 'developer',
+      terms: false,
+      skills: [],
+      tempSkill: '',
     }
+  },
+  methods: {
+    addSkill($event) {
+      if($event.key === ',' && this.tempSkill) {
+        if (!this.skills.includes(this.tempSkill)) {
+          this.skills.push(this.tempSkill)
+        }
+        this.tempSkill = ''
+      }
+    },
+    deleteSkill(skill) {
+      this.skills = this.skills.filter(item => {
+        return skill !== item
+      })
+    }
+  }
 }
 </script>
 
@@ -81,8 +88,6 @@ export default {
     border: none;
     border-bottom: 1px solid #ddd;
     color: #555;
-  
-
   }
   input[type="checkbox"] {
     display: inline-block;
@@ -90,5 +95,17 @@ export default {
     margin: 0 10px 0 0;
     position: relative;
     top: 2px;
+  }
+  .pill {
+    display: inline-block;
+    margin: 20px 10px 0 0;
+    padding: 6px 12px;
+    background: #eee;
+    border-radius: 20px;
+    font-size: 12px;
+    letter-spacing: 1px;
+    font-weight: bold;
+    color: #777;
+    cursor: pointer;
   }
 </style>
