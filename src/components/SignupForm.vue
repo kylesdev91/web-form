@@ -13,7 +13,7 @@
       <option value="designer">Web Designer</option>
     </select>
 
-    <label>Skills (press alt + comma to add):</label>
+    <label>Skills (press alt + enter to add):</label>
     <input type="text" v-model="tempSkill" @keyup.enter="addSkill">
     <div v-for="skill in skills" :key="skill" class="pill">
       <span @click="deleteSkill(skill)">{{ skill }}</span>
